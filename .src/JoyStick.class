@@ -12,24 +12,24 @@
 ' published by the Free Software Foundation.
 Inherits UserControl
 Export
-'Estado de las teclas de direccion del joystick
+'State of the joystick arrow keys
 Public UpState As Byte
 Public DownState As Byte
 Public LeftState As Byte
 Public RightState As Byte
 '
-Public Boton0 As Boolean
-Public Boton1 As Boolean
-Public Boton2 As Boolean
-Public Boton3 As Boolean
-Public Boton4 As Boolean
-Public Boton5 As Boolean
-Public Boton6 As Boolean
-Public Boton7 As Boolean
-Public Boton8 As Boolean
-Public Boton9 As Boolean
-Public Boton10 As Boolean
-Public Boton11 As Boolean
+Public Button0 As Boolean
+Public Button1 As Boolean
+Public Button2 As Boolean
+Public Button3 As Boolean
+Public Button4 As Boolean
+Public Button5 As Boolean
+Public Button6 As Boolean
+Public Button7 As Boolean
+Public Button8 As Boolean
+Public Button9 As Boolean
+Public Button10 As Boolean
+Public Button11 As Boolean
 Private jsdev As Process
 
 Event OnJoystick
@@ -80,86 +80,86 @@ Public Sub Device_Read()
   ' Debug "Number", number
   ' Debug "Value", value
 
-  If myevent And 1 Then 'Si es un boton
-    If value Then 'Si se presiona un boton
+  If myevent And 1 Then 'if it is a button
+    If value Then 'If a button is pressed
       Select Case number
         Case 0
-          boton0 = True
+          Button0 = True
         Case 1
-          boton1 = True
+          Button1 = True
         Case 2
-          boton2 = True
+          Button2 = True
         Case 3
-          boton3 = True
+          Button3 = True
         Case 4
-          boton4 = True
+          Button4 = True
         Case 5
-          boton5 = True
+          Button5 = True
         Case 6
-          boton6 = True
+          Button6 = True
         Case 7
-          boton7 = True
+          Button7 = True
         Case 8
-          boton8 = True
+          Button8 = True
         Case 9
-          boton9 = True
+          Button9 = True
         Case 10
-          boton10 = True
+          Button10 = True
         Case 11
-          boton11 = True
+          Button11 = True
       End Select
-    Else 'Si se suelta un boton
+    Else 'If a button is released
       Select Case number
         Case 0
-          boton0 = False
+          Button0 = False
         Case 1
-          boton1 = False
+          Button1 = False
         Case 2
-          boton2 = False
+          Button2 = False
         Case 3
-          boton3 = False
+          Button3 = False
         Case 4
-          boton4 = False
+          Button4 = False
         Case 5
-          boton5 = False
+          Button5 = False
         Case 6
-          boton6 = False
+          Button6 = False
         Case 7
-          boton7 = False
+          Button7 = False
         Case 8
-          boton8 = False
+          Button8 = False
         Case 9
-          boton9 = False
+          Button9 = False
         Case 10
-          boton10 = False
+          Button10 = False
         Case 11
-          boton11 = False
+          Button11 = False
       End Select
     Endif
-    'si es del Joystick
+    'if it is from the joystick 
   Else If myevent And 2 Then
-    '******************Si Movemos el Joystick*************
-    'Si pulsamos ARRIBA
+    '******************If we move the joystick*************
+    'If we press UP
     If number = 1 And value < 0 And Abs(value) > CalibrationZero Then
       UpState = 1
       Downstate = 0
     End If
-    'Si pulsamos ABAJO
+    'If we press DOWN
     If number = 1 And value > 0 And Abs(value) > CalibrationZero Then
       Downstate = 1
       UpState = 0
     End If
-    'Si pulsamos DERECHA
+    'If we press RIGHT 
     If number = 0 And value > 0 And Abs(value) > CalibrationZero Then
       RightState = 1
       LeftState = 0
     End If
-    'Si pulsamos DERECHA
+    'If we press RIGHT
     If number = 0 And value < 0 And Abs(value) > CalibrationZero Then
       LeftState = 1
       RightState = 0
     End If
-    '*****************Si soltamos el joystick***************
+    '*****************If we release the joystick ***************
     If number = 1 And Abs(value) < CalibrationZero Then
       UpState = 0
       Downstate = 0
@@ -175,7 +175,7 @@ Public Sub Device_Read()
 End
 
 Public Function GetJoystickDirection() As Integer
-  'Establece un numero a la direccion de la palanca o de los botones de direccion
+  'Sets a number to the direction of the joystick or direction buttons
 
   If UpState = 1 Then
     If RightState = 1 Then Return 9
@@ -184,7 +184,7 @@ Public Function GetJoystickDirection() As Integer
     If rightstate = 0 And downstate = 0 And leftstate = 0 Then Return 8
   End If
 
-  'Combinaciones con la tecla DERECHA
+  'Combinations with the RIGHT key 
   If RightState = 1 Then
     If UpState = 1 Then Return 9
     If Downstate = 1 Then Return 3
@@ -192,7 +192,7 @@ Public Function GetJoystickDirection() As Integer
     If Upstate = 0 And downstate = 0 And leftstate = 0 Then Return 6
   End If
 
-  'Combinaciones con la tecla IZQUIERDA
+  'Combinations with the LEFT key 
   If LeftState = 1 Then
     If UpState = 1 Then Return 7
     If Downstate = 1 Then Return 1
@@ -200,7 +200,7 @@ Public Function GetJoystickDirection() As Integer
     If UpState = 0 And DownState = 0 And RightState = 0 Then Return 4
   End If
 
-  'Combinaciones con la tecla ABAJO
+  'Combinations with the DOWN key 
   If DownState = 1 Then
     If UpState = 1 Then Return 0
     If Leftstate = 1 Then Return 1
@@ -212,7 +212,7 @@ End
 
 Public Function HoldButton0() As Boolean
 
-  If Boton0 = True Then
+  If Button0 = True Then
     Return True
   Else
     Return False
@@ -222,7 +222,7 @@ End
 
 Public Function HoldButton1() As Boolean
 
-  If Boton1 = True Then
+  If Button1 = True Then
     Return True
   Else
     Return False
@@ -232,7 +232,7 @@ End
 
 Public Function HoldButton2() As Boolean
 
-  If Boton2 = True Then
+  If Button2 = True Then
     Return True
   Else
     Return False
@@ -242,7 +242,7 @@ End
 
 Public Function HoldButton3() As Boolean
 
-  If Boton3 = True Then
+  If Button3 = True Then
     Return True
   Else
     Return False
@@ -252,7 +252,7 @@ End
 
 Public Function HoldButton4() As Boolean
 
-  If Boton4 = True Then
+  If Button4 = True Then
     Return True
   Else
     Return False
@@ -262,7 +262,7 @@ End
 
 Public Function HoldButton5() As Boolean
 
-  If Boton5 = True Then
+  If Button5 = True Then
     Return True
   Else
     Return False
@@ -272,7 +272,7 @@ End
 
 Public Function HoldButton6() As Boolean
 
-  If Boton6 = True Then
+  If Button6 = True Then
     Return True
   Else
     Return False
@@ -282,7 +282,7 @@ End
 
 Public Function HoldButton7() As Boolean
 
-  If Boton7 = True Then
+  If Button7 = True Then
     Return True
   Else
     Return False
@@ -292,7 +292,7 @@ End
 
 Public Function HoldButton8() As Boolean
 
-  If Boton8 = True Then
+  If Button8 = True Then
     Return True
   Else
     Return False
@@ -302,7 +302,7 @@ End
 
 Public Function HoldButton9() As Boolean
 
-  If Boton9 = True Then
+  If Button9 = True Then
     Return True
   Else
     Return False
@@ -312,7 +312,7 @@ End
 
 Public Function HoldButton10() As Boolean
 
-  If Boton10 = True Then
+  If Button10 = True Then
     Return True
   Else
     Return False
@@ -322,7 +322,7 @@ End
 
 Public Function HoldButton11() As Boolean
 
-  If Boton11 = True Then
+  If Button11 = True Then
     Return True
   Else
     Return False
