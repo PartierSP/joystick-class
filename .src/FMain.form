@@ -55,4 +55,7 @@
   { cbButton11 CheckBox
     MoveScaled(54,25,15,3)
   }
+  { cbButton12 CheckBox
+    MoveScaled(10,25,15,3)
+  }
 }

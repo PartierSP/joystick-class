@@ -108,7 +108,7 @@ Public Sub Device_Read()
         Case 11
           Button11 = True
         Case 12
-          Button11 = True
+          Button12 = True
       End Select
     Else 'If a button is released
       Select Case number
@@ -137,7 +137,7 @@ Public Sub Device_Read()
         Case 11
           Button11 = False
         Case 12
-          Button11 = False
+          Button12 = False
       End Select
     Endif
     
@@ -328,6 +328,16 @@ End
 Public Function HoldButton11() As Boolean
 
   If Button11 = True Then
+    Return True
+  Else
+    Return False
+  End If
+
+End
+
+Public Function HoldButton12() As Boolean
+
+  If Button12 = True Then
     Return True
   Else
     Return False

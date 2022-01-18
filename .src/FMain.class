@@ -33,6 +33,7 @@ Public Sub joy1_OnJoystick()
   cbButton9.Value = .HoldButton9()
   cbButton10.Value = .HoldButton10()
   cbButton11.Value = .HoldButton11()
+  cbButton12.Value = .HoldButton12()
   End With
 
 End
