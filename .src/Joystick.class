@@ -10,14 +10,16 @@
 ' This program is free software; you can redistribute it and/or modify
 ' it under the terms of the GNU General Public License version 2 as
 ' published by the Free Software Foundation.
+
 Inherits UserControl
 Export
+
 'State of the joystick arrow keys
 Public UpState As Byte
 Public DownState As Byte
 Public LeftState As Byte
 Public RightState As Byte
-'
+
 Public Button0 As Boolean
 Public Button1 As Boolean
 Public Button2 As Boolean
@@ -76,9 +78,9 @@ Public Sub Device_Read()
   myevent = Read #jsdev As Byte ' , 1 ' myevent: 1 byte
   number = Read #jsdev As Byte ', 1 ' number: 1 byte
 
-   Debug "MyEvent: "; myevent, "Number: "; number, "Value: "; value
+   Debug "Stamp: "; stamp, "MyEvent: "; myevent, "Number: "; number, "Value: "; value
 
-  If myevent And 1 Then 'if it is a button
+  If myevent And 1 Then 'if this event is a button
     If value Then 'If a button is pressed
       Select Case number
         Case 0
@@ -138,7 +140,8 @@ Public Sub Device_Read()
           Button11 = False
       End Select
     Endif
-    'if it is from the joystick 
+    
+  'if it is from a joystick axis
   Else If myevent And 2 Then
     '******************If we move the joystick*************
     'If we press UP

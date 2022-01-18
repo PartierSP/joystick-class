@@ -5,7 +5,7 @@
   Icon = Picture["input-gaming.svg"]
   Resizable = False
   { joy1 Joystick
-    MoveScaled(19,22,15,7)
+    MoveScaled(29,2,6,6)
   }
   { cbUp CheckBox
     MoveScaled(10,5,13,4)

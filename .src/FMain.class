@@ -1,6 +1,5 @@
 ' Gambas class file
 
-' by Terco
 ' Public joy1 As New JoyStick(Me)
 Public JoyStickReady As Boolean = True
 
@@ -11,8 +10,6 @@ Public Sub Form_Open()
 
 End
 
-
-' By Terco
 Public Sub joy1_OnJoystick()
 
   'Public Sub tmrJoystick_Timer()
@@ -39,7 +36,6 @@ Public Sub joy1_OnJoystick()
   End With
 
 End
-
 
 Public Sub Form_Close()
 
