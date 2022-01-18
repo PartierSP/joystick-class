@@ -1,59 +1,58 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,122,78)
-  Background = &H959F8B&
-  Icon = Picture["aviones/avion1.png"]
+  MoveScaled(0,0,71,31)
+  Icon = Picture["input-gaming.svg"]
   Resizable = False
-  { DrawingArea1 DrawingArea
-    MoveScaled(1,1,120,77.1429)
-    Background = &H3761DF&
-    { TimerRedibujar #Timer
-      #MoveScaled(28,1)
-    }
-    { TimerParada #Timer
-      #MoveScaled(41,1)
-    }
-    { joy1 JoyStick
-      MoveScaled(29,13,15,7)
-    }
-    { Label4 Label
-      MoveScaled(95,5,12,4)
-      Font = Font["+2"]
-      Foreground = &HFF0000&
-      Alignment = Align.Right
-      Text = ("SCORE")
-    }
+  { joy1 Joystick
+    MoveScaled(19,22,15,7)
   }
-  { ButtonIniciar Button
-    MoveScaled(2,70,16,7)
-    AutoResize = True
-    Text = ("Iniciar")
-    Picture = Picture["aviones/avion1.png"]
+  { cbUp CheckBox
+    MoveScaled(10,5,13,4)
   }
-  { valueboxPuntuacion ValueBox
-    MoveScaled(111,6,6,4)
-    Font = Font["+2"]
-    Background = Color.Transparent
-    Foreground = &HFF0000&
-    Expand = True
-    Text = ("ValueBox1")
-    ReadOnly = True
-    Border = False
+  { cbLeft CheckBox
+    MoveScaled(3,11,13,4)
   }
-  { ProgressBarDanos ProgressBar
-    MoveScaled(96,2,24,3)
-    Background = &H00FF7F&
-    Foreground = &HFF0000&
+  { cbRight CheckBox
+    MoveScaled(16,11,13,4)
   }
-  { Label3 Label
-    MoveScaled(30,74,65,3)
-    Foreground = &H0000FF&
-    Text = ("Autor: Julio Sánchez Berro. Licencia: GPL 2.0 www.jsbsan.blogspot.com")
+  { cbDown CheckBox
+    MoveScaled(10,17,13,4)
   }
-  { PictureBox1 PictureBox
-    MoveScaled(112,68,7,9)
-    Picture = Picture["gambas update version actualizacion .png"]
-    Stretch = True
+  { cbButton0 CheckBox
+    MoveScaled(38,5,15,3)
+  }
+  { cbButton1 CheckBox
+    MoveScaled(38,9,15,3)
+  }
+  { cbButton2 CheckBox
+    MoveScaled(38,13,15,3)
+  }
+  { cbButton3 CheckBox
+    MoveScaled(38,17,15,3)
+  }
+  { cbButton4 CheckBox
+    MoveScaled(38,21,15,3)
+  }
+  { cbButton5 CheckBox
+    MoveScaled(38,25,15,3)
+  }
+  { cbButton6 CheckBox
+    MoveScaled(54,5,15,3)
+  }
+  { cbButton7 CheckBox
+    MoveScaled(54,9,15,3)
+  }
+  { cbButton8 CheckBox
+    MoveScaled(54,13,15,3)
+  }
+  { cbButton9 CheckBox
+    MoveScaled(54,17,15,3)
+  }
+  { cbButton10 CheckBox
+    MoveScaled(54,21,15,3)
+  }
+  { cbButton11 CheckBox
+    MoveScaled(54,25,15,3)
   }
 }

@@ -1,13 +1,13 @@
 # Gambas Project File 3.0
-Title=1945
+Title=Joystick Demo
 Startup=FMain
-Icon=aviones/avion1.png
+Icon=input-gaming.svg
 Version=0.0.8
 Component=gb.image
 Component=gb.gui.qt
 Component=gb.form
-Description="Vuela y destruye a los aviones enemigos!!!"
-Authors="Julio Sánchez Berro"
+Description="Joystick class demonstration."
+Authors="PartierSP\n\nOriginal code found from Julio Sánchez Berro's Github repository, 1945."
 TabSize=2
 Translate=1
 Language=es

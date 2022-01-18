@@ -30,6 +30,7 @@ Public Button8 As Boolean
 Public Button9 As Boolean
 Public Button10 As Boolean
 Public Button11 As Boolean
+Public Button12 As Boolean
 Private jsdev As Process
 
 Event OnJoystick
@@ -67,7 +68,6 @@ Public Sub Device_Read()
   Dim value As Short
   Dim myevent As Byte
   Dim number As Byte
-  Dim test As String
 
   Dim CalibrationZero As Integer = 200
 
@@ -76,9 +76,7 @@ Public Sub Device_Read()
   myevent = Read #jsdev As Byte ' , 1 ' myevent: 1 byte
   number = Read #jsdev As Byte ', 1 ' number: 1 byte
 
-  ' Debug "MyEvent", myevent
-  ' Debug "Number", number
-  ' Debug "Value", value
+   Debug "MyEvent: "; myevent, "Number: "; number, "Value: "; value
 
   If myevent And 1 Then 'if it is a button
     If value Then 'If a button is pressed
@@ -107,6 +105,8 @@ Public Sub Device_Read()
           Button10 = True
         Case 11
           Button11 = True
+        Case 12
+          Button11 = True
       End Select
     Else 'If a button is released
       Select Case number
@@ -134,6 +134,8 @@ Public Sub Device_Read()
           Button10 = False
         Case 11
           Button11 = False
+        Case 12
+          Button11 = False
       End Select
     Endif
     'if it is from the joystick 
@@ -154,7 +156,7 @@ Public Sub Device_Read()
       RightState = 1
       LeftState = 0
     End If
-    'If we press RIGHT
+    'If we press LEFT
     If number = 0 And value < 0 And Abs(value) > CalibrationZero Then
       LeftState = 1
       RightState = 0
