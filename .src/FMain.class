@@ -1,50 +1,24 @@
 ' Gambas class file
 
 ' Public joy1 As New JoyStick(Me)
-Public JoyStickReady As Boolean = True
 
 Public Sub Form_Open()
 
-
   Me.Center()
-
-End
-
-Public Sub joy1_OnJoystick()
-
-  'Public Sub tmrJoystick_Timer()
-
-  If Not JoyStickReady Then Return
-
-  With joy1
-  cbUp.Value = .UpState
-  cbDown.Value = .DownState
-  cbRight.Value = .RightState
-  cbLeft.Value = .LeftState
-  cbButton0.Value = .HoldButton0()
-  cbButton1.Value = .HoldButton1()
-  cbButton2.Value = .HoldButton2()
-  cbButton3.Value = .HoldButton3()
-  cbButton4.Value = .HoldButton4()
-  cbButton5.Value = .HoldButton5()
-  cbButton6.Value = .HoldButton6()
-  cbButton7.Value = .HoldButton7()
-  cbButton8.Value = .HoldButton8()
-  cbButton9.Value = .HoldButton9()
-  cbButton10.Value = .HoldButton10()
-  cbButton11.Value = .HoldButton11()
-  cbButton12.Value = .HoldButton12()
-  End With
+  
+  If Joystk1.Ready = False Then 
+    Message.Warning("Joystick not found.")
+  Endif
 
 End
 
 Public Sub Form_Close()
 
-  joy1.Close
+  Joystk1.Close
 
 End
 
-Public Sub joy1_AxisChange(Id As Integer, Value As Integer)
+Public Sub Joystk1_AxisChange(Id As Integer, Value As Integer)
 
   Select id
     Case 0
@@ -63,6 +37,39 @@ Public Sub joy1_AxisChange(Id As Integer, Value As Integer)
 
 End
 
+Public Sub Joystk1_ButtonChange(Id As Integer, Value As Boolean)
+
+  Select id
+    Case 0
+      cbButton0.Value = Value
+    Case 1
+      cbButton1.Value = Value
+    Case 2
+      cbButton2.Value = Value
+    Case 3
+      cbButton3.Value = Value
+    Case 4
+      cbButton4.Value = Value
+    Case 5
+      cbButton5.Value = Value
+    Case 6
+      cbButton6.Value = Value
+    Case 7
+      cbButton7.Value = Value
+    Case 8
+      cbButton8.Value = Value
+    Case 9
+      cbButton9.Value = Value
+    Case 10
+      cbButton10.Value = Value
+    Case 11
+      cbButton11.Value = Value
+    Case 12
+      cbButton12.Value = Value
+  End Select
+
+End
+
 Public Sub ScaleAxis(Value As Integer) As Float
   
   Dim fOutput As Float
@@ -72,4 +79,3 @@ Public Sub ScaleAxis(Value As Integer) As Float
   Debug "Raw: "; Value, "Output: "; fOutput
   Return fOutput
 End
-

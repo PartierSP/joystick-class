@@ -6,6 +6,7 @@
 ' Copyright 2008 Rob Kudla, Binara, Inc. <rpm@kudla.org>
 
 ' Adapted by Terco 2021 for Gambas3 and Custom Control
+' Code generalized by PartierSP, 2022
 '
 ' This program is free software; you can redistribute it and/or modify
 ' it under the terms of the GNU General Public License version 2 as
@@ -14,44 +15,37 @@
 Inherits UserControl
 Export
 
-'State of the joystick arrow keys
-Public UpState As Byte
-Public DownState As Byte
-Public LeftState As Byte
-Public RightState As Byte
-
-Public Button0 As Boolean
-Public Button1 As Boolean
-Public Button2 As Boolean
-Public Button3 As Boolean
-Public Button4 As Boolean
-Public Button5 As Boolean
-Public Button6 As Boolean
-Public Button7 As Boolean
-Public Button8 As Boolean
-Public Button9 As Boolean
-Public Button10 As Boolean
-Public Button11 As Boolean
-Public Button12 As Boolean
-Private jsdev As Process
+Public Ready As Boolean = False
+Public Button As New Boolean[13] 'each button is d
+Public Axis As New Integer[6]
+Private jsDev As Process
 
 Event ButtonChange(Id As Integer, Value As Boolean)
 Event AxisChange(Id As Integer, Value As Integer)
 Event OnJoystick
 
-Public Sub _new(Optional device As String)
+Public Sub _new(Optional sDev As String)
 
-  If device = "" Then device = "/dev/input/js0"
-  ' the interpreter dies when we try to read from /dev/input/js0 as a file
-  ' saying "invalid argument", so we have to run cat
-  jsdev = Exec ["cat", device] For Read As "Device"
+  If sDev = "" Then 
+    'if no device was specified, try js0.
+    sDev = "/dev/input/js0"
+  Endif 
+
+  If Exist(sDev) Then 
+    ' the interpreter dies when we try to read from /dev/input/js0 as a file
+    ' saying "invalid argument", so we have to run cat
+    jsDev = Exec ["cat", sDev] For Read As "Device"
+
+    Ready = True
+  Endif 
 
 End
 
 Public Sub Close()
 
   ' kill the cat process if it's still going
-  Try jsdev.Kill
+  Try jsDev.Kill
+  Ready = False
 
 End
 
@@ -60,7 +54,7 @@ Public Sub EmtyDevice()
   Dim bByte As Byte
 
   Do
-    Try bbyte = Read #jsdev As Byte
+    Try bByte = Read #jsDev As Byte
     If Eof(jsdev) = True Then Return
   Loop
 
@@ -68,282 +62,28 @@ End
 
 Public Sub Device_Read()
 
-  Dim stamp As Integer
-  Dim value As Short
-  Dim myevent As Byte
-  Dim number As Byte
+  Dim iStamp As Integer
+  Dim shValue As Short
+  Dim byEventType As Byte
+  Dim byInputId As Byte
 
-  Dim CalibrationZero As Integer = 200
+  iStamp = Read #jsDev As Integer     ' Time stamp: 4 bytes
+  shValue = Read #jsDev As Short      ' Value: 2 bytes
+  byEventType = Read #jsDev As Byte   ' Type of Event: 1 byte
+  byInputId = Read #jsDev As Byte     ' InputId: 1 byte
 
-  stamp = Read #jsdev As Integer ', 4  ' stamp: 4 bytes
-  value = Read #jsdev As Short ' , 2 ' value: 2 bytes
-  myevent = Read #jsdev As Byte ' , 1 ' myevent: 1 byte
-  number = Read #jsdev As Byte ', 1 ' number: 1 byte
+   Debug "Stamp: "; iStamp, "MyEvent: "; byEventType, "Number: "; byInputId, "Value: "; shValue
 
-   Debug "Stamp: "; stamp, "MyEvent: "; myevent, "Number: "; number, "Value: "; value
-
-  If myevent And 1 Then 'if this event is a button
-    If value Then 'If a button is pressed
-      Select Case number
-        Case 0
-          Button0 = True
-        Case 1
-          Button1 = True
-        Case 2
-          Button2 = True
-        Case 3
-          Button3 = True
-        Case 4
-          Button4 = True
-        Case 5
-          Button5 = True
-        Case 6
-          Button6 = True
-        Case 7
-          Button7 = True
-        Case 8
-          Button8 = True
-        Case 9
-          Button9 = True
-        Case 10
-          Button10 = True
-        Case 11
-          Button11 = True
-        Case 12
-          Button12 = True
-      End Select
-    Else 'If a button is released
-      Select Case number
-        Case 0
-          Button0 = False
-        Case 1
-          Button1 = False
-        Case 2
-          Button2 = False
-        Case 3
-          Button3 = False
-        Case 4
-          Button4 = False
-        Case 5
-          Button5 = False
-        Case 6
-          Button6 = False
-        Case 7
-          Button7 = False
-        Case 8
-          Button8 = False
-        Case 9
-          Button9 = False
-        Case 10
-          Button10 = False
-        Case 11
-          Button11 = False
-        Case 12
-          Button12 = False
-      End Select
-    Endif
-    Raise ButtonChange(number, value)
-  'if it is from a joystick axis
-  Else If myevent And 2 Then
-    '******************If we move the joystick*************
-    'If we press UP
-    If number = 1 And value < 0 And Abs(value) > CalibrationZero Then
-      UpState = 1
-      Downstate = 0
-    End If
-    'If we press DOWN
-    If number = 1 And value > 0 And Abs(value) > CalibrationZero Then
-      Downstate = 1
-      UpState = 0
-    End If
-    'If we press RIGHT 
-    If number = 0 And value > 0 And Abs(value) > CalibrationZero Then
-      RightState = 1
-      LeftState = 0
-    End If
-    'If we press LEFT
-    If number = 0 And value < 0 And Abs(value) > CalibrationZero Then
-      LeftState = 1
-      RightState = 0
-    End If
-    '*****************If we release the joystick ***************
-    If number = 1 And Abs(value) < CalibrationZero Then
-      UpState = 0
-      Downstate = 0
-    End If
-    If number = 0 And Abs(value) < CalibrationZero Then
-      RightState = 0
-      Leftstate = 0
-    End If
-    Raise AxisChange(number, value)
+  If byEventType And 1 Then 
+    'This event is a change in a button's state
+    Button[byInputId] = shValue
+    Raise ButtonChange(byInputId, shValue)
+  Else If byEventType And 2 Then 
+    'This event is an axis movement
+    Axis[byInputId] = shValue
+    Raise AxisChange(byInputId, shValue)
   Endif
 
   Raise OnJoystick
-
-End
-
-Public Function GetJoystickDirection() As Integer
-  'Sets a number to the direction of the joystick or direction buttons
-
-  If UpState = 1 Then
-    If RightState = 1 Then Return 9
-    If Downstate = 1 Then Return 0
-    If LeftState = 1 Then Return 7
-    If rightstate = 0 And downstate = 0 And leftstate = 0 Then Return 8
-  End If
-
-  'Combinations with the RIGHT key 
-  If RightState = 1 Then
-    If UpState = 1 Then Return 9
-    If Downstate = 1 Then Return 3
-    If LeftState = 1 Then Return 0
-    If Upstate = 0 And downstate = 0 And leftstate = 0 Then Return 6
-  End If
-
-  'Combinations with the LEFT key 
-  If LeftState = 1 Then
-    If UpState = 1 Then Return 7
-    If Downstate = 1 Then Return 1
-    If RightState = 1 Then Return 0
-    If UpState = 0 And DownState = 0 And RightState = 0 Then Return 4
-  End If
-
-  'Combinations with the DOWN key 
-  If DownState = 1 Then
-    If UpState = 1 Then Return 0
-    If Leftstate = 1 Then Return 1
-    If RightState = 1 Then Return 3
-    If UpState = 0 And LeftState = 0 And RightState = 0 Then Return 2
-  End If
-
-End
-
-Public Function HoldButton0() As Boolean
-
-  If Button0 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton1() As Boolean
-
-  If Button1 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton2() As Boolean
-
-  If Button2 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton3() As Boolean
-
-  If Button3 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton4() As Boolean
-
-  If Button4 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton5() As Boolean
-
-  If Button5 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton6() As Boolean
-
-  If Button6 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton7() As Boolean
-
-  If Button7 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton8() As Boolean
-
-  If Button8 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton9() As Boolean
-
-  If Button9 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton10() As Boolean
-
-  If Button10 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton11() As Boolean
-
-  If Button11 = True Then
-    Return True
-  Else
-    Return False
-  End If
-
-End
-
-Public Function HoldButton12() As Boolean
-
-  If Button12 = True Then
-    Return True
-  Else
-    Return False
-  End If
 
 End
