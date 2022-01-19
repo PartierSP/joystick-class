@@ -1,13 +1,22 @@
 ' Gambas class file
 
-' Public joy1 As New JoyStick(Me)
+Public Joystk3 As JoyStick
 
 Public Sub Form_Open()
 
   Me.Center()
   
+  'Check if Joystk1 is ready.
   If Joystk1.Ready = False Then 
-    Message.Warning("Joystick not found.")
+    Message.Warning("Joystick 0 not found.")
+  Endif
+
+  'Create another joystick instance for device js3
+  Joystk3 = New Joystick(Me, "/dev/input/js3")
+
+  'Check if Joystk3 is ready.
+  If Joystk3.Ready = False Then 
+    Message.Warning("Joystick 3 not found.")
   Endif
 
 End
@@ -15,6 +24,7 @@ End
 Public Sub Form_Close()
 
   Joystk1.Close
+'  joy1.Close
 
 End
 
@@ -71,11 +81,12 @@ Public Sub Joystk1_ButtonChange(Id As Integer, Value As Boolean)
 End
 
 Public Sub ScaleAxis(Value As Integer) As Float
-  
+
   Dim fOutput As Float
-  
+
   'Axis max travel is -32767 to 32767
   fOutput = (Value + 32767) / 65534
-  Debug "Raw: "; Value, "Output: "; fOutput
+
   Return fOutput
+
 End

@@ -16,7 +16,7 @@ Inherits UserControl
 Export
 
 Public Ready As Boolean = False
-Public Button As New Boolean[13] 'each button is d
+Public Button As New Boolean[13]
 Public Axis As New Integer[6]
 Private jsDev As Process
 
@@ -72,7 +72,7 @@ Public Sub Device_Read()
   byEventType = Read #jsDev As Byte   ' Type of Event: 1 byte
   byInputId = Read #jsDev As Byte     ' InputId: 1 byte
 
-   Debug "Stamp: "; iStamp, "MyEvent: "; byEventType, "Number: "; byInputId, "Value: "; shValue
+   Debug "Stamp: "; iStamp, "Event Type: "; byEventType, "Id: "; byInputId, "Value: "; shValue
 
   If byEventType And 1 Then 
     'This event is a change in a button's state
