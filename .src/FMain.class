@@ -43,3 +43,33 @@ Public Sub Form_Close()
   joy1.Close
 
 End
+
+Public Sub joy1_AxisChange(Id As Integer, Value As Integer)
+
+  Select id
+    Case 0
+      pbAxis0.Value = ScaleAxis(Value)
+    Case 1
+      pbAxis1.Value = ScaleAxis(Value)
+    Case 2
+      pbAxis2.Value = ScaleAxis(Value)
+    Case 3
+      pbAxis3.Value = ScaleAxis(Value)
+    Case 4
+      pbAxis4.Value = ScaleAxis(Value)
+    Case 5
+      pbAxis5.Value = ScaleAxis(Value)
+  End Select
+
+End
+
+Public Sub ScaleAxis(Value As Integer) As Float
+  
+  Dim fOutput As Float
+  
+  'Axis max travel is -32767 to 32767
+  fOutput = (Value + 32767) / 65534
+  Debug "Raw: "; Value, "Output: "; fOutput
+  Return fOutput
+End
+

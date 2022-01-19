@@ -1,7 +1,7 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,71,31)
+  MoveScaled(0,0,70,60)
   Icon = Picture["input-gaming.svg"]
   Resizable = False
   { joy1 Joystick
@@ -57,5 +57,23 @@
   }
   { cbButton12 CheckBox
     MoveScaled(10,25,15,3)
+  }
+  { pbAxis0 ProgressBar
+    MoveScaled(3,29,64,4)
+  }
+  { pbAxis1 ProgressBar
+    MoveScaled(3,34,64,4)
+  }
+  { pbAxis2 ProgressBar
+    MoveScaled(3,39,64,4)
+  }
+  { pbAxis3 ProgressBar
+    MoveScaled(3,44,64,4)
+  }
+  { pbAxis4 ProgressBar
+    MoveScaled(3,49,64,4)
+  }
+  { pbAxis5 ProgressBar
+    MoveScaled(3,54,64,4)
   }
 }

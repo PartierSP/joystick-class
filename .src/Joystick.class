@@ -35,6 +35,8 @@ Public Button11 As Boolean
 Public Button12 As Boolean
 Private jsdev As Process
 
+Event ButtonChange(Id As Integer, Value As Boolean)
+Event AxisChange(Id As Integer, Value As Integer)
 Event OnJoystick
 
 Public Sub _new(Optional device As String)
@@ -140,7 +142,7 @@ Public Sub Device_Read()
           Button12 = False
       End Select
     Endif
-    
+    Raise ButtonChange(number, value)
   'if it is from a joystick axis
   Else If myevent And 2 Then
     '******************If we move the joystick*************
@@ -173,6 +175,7 @@ Public Sub Device_Read()
       RightState = 0
       Leftstate = 0
     End If
+    Raise AxisChange(number, value)
   Endif
 
   Raise OnJoystick
