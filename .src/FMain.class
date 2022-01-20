@@ -1,17 +1,21 @@
 ' Gambas class file
 
-Public Joystk3 As JoyStick
+'Declare a Joystick so it can be dynamically created later in the Form_Open subroutine
+Public Joystk3 As Joystick
 
 Public Sub Form_Open()
 
   Me.Center()
   
   'Check if Joystk1 is ready.
-  If Joystk1.Ready = False Then 
+  If Joystk0.Ready = False Then 
     Message.Warning("Joystick 0 not found.")
+    'Enable any kind of fall back routines here (either prompt user to check hardware and settings and/or enable mouse/keyboard input instead)
   Endif
 
   'Create another joystick instance for device js3
+  'We are not expecting this joystick to connect, but it demonstrates
+  'how to dynamically create a joystick connection at runtime.
   Joystk3 = New Joystick(Me, "/dev/input/js3")
 
   'Check if Joystk3 is ready.
@@ -23,14 +27,19 @@ End
 
 Public Sub Form_Close()
 
-  Joystk1.Close
-'  joy1.Close
+  'Must close off all open Joysticks before exiting program.
+  Joystk0.Close
+  Joystk3.Close
 
 End
 
-Public Sub Joystk1_AxisChange(Id As Integer, Value As Integer)
+Public Sub Joystk0_AxisChange(Id As Integer, Value As Integer)
 
-  Select id
+  'A movement occured on one of the joystick axises.
+  'Id = which axis we are dealing with.
+  'Value = the new reading for the identified axis (maximum range of -32767 to 32767).
+  'NOTE: some joysticks may not use the full range due to some physical/hardware limitation.
+  Select Id
     Case 0
       pbAxis0.Value = ScaleAxis(Value)
     Case 1
@@ -47,9 +56,12 @@ Public Sub Joystk1_AxisChange(Id As Integer, Value As Integer)
 
 End
 
-Public Sub Joystk1_ButtonChange(Id As Integer, Value As Boolean)
+Public Sub Joystk0_ButtonChange(Id As Integer, Value As Boolean)
 
-  Select id
+  'A button state has changed.
+  'Id = which button was changed.
+  'Value = the button's current state.  1=on, 0=off
+  Select Id
     Case 0
       cbButton0.Value = Value
     Case 1
@@ -81,6 +93,11 @@ Public Sub Joystk1_ButtonChange(Id As Integer, Value As Boolean)
 End
 
 Public Sub ScaleAxis(Value As Integer) As Float
+
+  'Progress bars require values of 0 to 1 while
+  'joystick axises vales are from -32767 to 32767.
+  'So these need to be scaled prior to using on a
+  'progress bar.
 
   Dim fOutput As Float
 

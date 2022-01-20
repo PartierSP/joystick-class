@@ -4,8 +4,8 @@
   MoveScaled(0,0,70,51)
   Icon = Picture["input-gaming.svg"]
   Resizable = False
-  { Joystk1 Joystick
-    MoveScaled(48,10,6,6)
+  { Joystk0 Joystick
+    MoveScaled(49,8,6,6)
     Visible = False
   }
   { cbButton0 CheckBox
