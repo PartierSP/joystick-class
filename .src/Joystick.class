@@ -67,23 +67,27 @@ Public Sub Device_Read()
   Dim byEventType As Byte
   Dim byInputId As Byte
 
-  iStamp = Read #jsDev As Integer     ' Time stamp: 4 bytes
-  shValue = Read #jsDev As Short      ' Value: 2 bytes
-  byEventType = Read #jsDev As Byte   ' Type of Event: 1 byte
-  byInputId = Read #jsDev As Byte     ' InputId: 1 byte
+  While Not Eof(jsDev)
 
-   Debug "Stamp: "; iStamp, "Event Type: "; byEventType, "Id: "; byInputId, "Value: "; shValue
+    iStamp = Read #jsDev As Integer     ' Time stamp: 4 bytes
+    shValue = Read #jsDev As Short      ' Value: 2 bytes
+    byEventType = Read #jsDev As Byte   ' Type of Event: 1 byte
+    byInputId = Read #jsDev As Byte     ' InputId: 1 byte
 
-  If byEventType And 1 Then 
-    'This event is a change in a button's state
-    Button[byInputId] = shValue
-    Raise ButtonChange(byInputId, shValue)
-  Else If byEventType And 2 Then 
-    'This event is an axis movement
-    Axis[byInputId] = shValue
-    Raise AxisChange(byInputId, shValue)
-  Endif
+     Debug "Stamp: "; iStamp, "Event Type: "; byEventType, "Id: "; byInputId, "Value: "; shValue
 
-  Raise OnJoystick
+    If byEventType And 1 Then 
+      'This event is a change in a button's state
+      Button[byInputId] = shValue
+      Raise ButtonChange(byInputId, shValue)
+    Else If byEventType And 2 Then 
+      'This event is an axis movement
+      Axis[byInputId] = shValue
+      Raise AxisChange(byInputId, shValue)
+    Endif
+
+    Raise OnJoystick
+
+  Wend 
 
 End
