@@ -2,7 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,70,51)
-  Icon = Picture["input-gaming.svg"]
+  Icon = Picture["Joystick.png"]
   Resizable = False
   { Joystk0 Joystick
     MoveScaled(49,8,6,6)
