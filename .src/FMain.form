@@ -1,61 +1,111 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,71,31)
-  Icon = Picture["input-gaming.svg"]
+  MoveScaled(0,0,70,51)
+  Icon = Picture["Joystick.png"]
   Resizable = False
-  { joy1 Joystick
-    MoveScaled(29,2,6,6)
-  }
-  { cbUp CheckBox
-    MoveScaled(10,5,13,4)
-  }
-  { cbLeft CheckBox
-    MoveScaled(3,11,13,4)
-  }
-  { cbRight CheckBox
-    MoveScaled(16,11,13,4)
-  }
-  { cbDown CheckBox
-    MoveScaled(10,17,13,4)
+  { Joystk0 Joystick
+    MoveScaled(49,8,6,6)
+    Visible = False
   }
   { cbButton0 CheckBox
-    MoveScaled(38,5,15,3)
+    MoveScaled(3,3,15,3)
+    Text = ("Button 0")
   }
   { cbButton1 CheckBox
-    MoveScaled(38,9,15,3)
+    MoveScaled(3,7,15,3)
+    Text = ("Button 1")
   }
   { cbButton2 CheckBox
-    MoveScaled(38,13,15,3)
+    MoveScaled(3,11,15,3)
+    Text = ("Button 2")
   }
   { cbButton3 CheckBox
-    MoveScaled(38,17,15,3)
+    MoveScaled(3,15,15,3)
+    Text = ("Button 3")
   }
   { cbButton4 CheckBox
-    MoveScaled(38,21,15,3)
+    MoveScaled(18,3,15,3)
+    Text = ("Button 4")
   }
   { cbButton5 CheckBox
-    MoveScaled(38,25,15,3)
+    MoveScaled(18,7,15,3)
+    Text = ("Button 5")
   }
   { cbButton6 CheckBox
-    MoveScaled(54,5,15,3)
+    MoveScaled(18,11,15,3)
+    Text = ("Button 6")
   }
   { cbButton7 CheckBox
-    MoveScaled(54,9,15,3)
+    MoveScaled(18,15,15,3)
+    Text = ("Button 7")
   }
   { cbButton8 CheckBox
-    MoveScaled(54,13,15,3)
+    MoveScaled(33,3,15,3)
+    Text = ("Button 8")
   }
   { cbButton9 CheckBox
-    MoveScaled(54,17,15,3)
+    MoveScaled(33,7,15,3)
+    Text = ("Button 9")
   }
   { cbButton10 CheckBox
-    MoveScaled(54,21,15,3)
+    MoveScaled(33,11,15,3)
+    Text = ("Button 10")
   }
   { cbButton11 CheckBox
-    MoveScaled(54,25,15,3)
+    MoveScaled(33,15,15,3)
+    Text = ("Button 11")
   }
   { cbButton12 CheckBox
-    MoveScaled(10,25,15,3)
+    MoveScaled(49,3,15,3)
+    Text = ("Button 12")
+  }
+  { pbAxis0 ProgressBar
+    MoveScaled(10,20,57,4)
+  }
+  { pbAxis1 ProgressBar
+    MoveScaled(10,25,57,4)
+  }
+  { pbAxis2 ProgressBar
+    MoveScaled(10,30,57,4)
+  }
+  { pbAxis3 ProgressBar
+    MoveScaled(10,35,57,4)
+  }
+  { pbAxis4 ProgressBar
+    MoveScaled(10,40,57,4)
+  }
+  { pbAxis5 ProgressBar
+    MoveScaled(10,45,57,4)
+  }
+  { Label1 Label
+    MoveScaled(2,20,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 0")
+  }
+  { Label2 Label
+    MoveScaled(2,25,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 1")
+  }
+  { Label3 Label
+    MoveScaled(2,30,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 2")
+  }
+  { Label4 Label
+    MoveScaled(2,35,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 3")
+  }
+  { Label5 Label
+    MoveScaled(2,40,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 4")
+  }
+  { Label6 Label
+    MoveScaled(2,45,7,4)
+    Alignment = Align.Right
+    Text = ("Axis 5")
   }
 }
